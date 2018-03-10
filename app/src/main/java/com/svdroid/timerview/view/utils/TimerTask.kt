@@ -7,12 +7,13 @@ import com.svdroid.timerview.view.ITimerTickListener
  */
 data class TimerTask(
         private val listener: ITimerTickListener?,
-        private var time: Long,
+        private val time: Long,
         private val tick: Long,
-        private val isCountDown: Boolean
+        private val isCountDown: Boolean,
+        private var currentTime: Long = if (isCountDown) time else 0
 ) : java.util.TimerTask() {
     override fun run() {
-        time -= tick
-        listener?.updateTime(time)
+        currentTime = if (isCountDown) currentTime - tick else currentTime + tick
+        listener?.updateTime(currentTime)
     }
 }

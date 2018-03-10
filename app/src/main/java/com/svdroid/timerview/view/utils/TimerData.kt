@@ -5,11 +5,11 @@ package com.svdroid.timerview.view.utils
  */
 data class TimerData(
         val time: Long,
-        var currentTime: Long = time,
-        var tickPeriod: Long = 25L,
         val sweepAngel: Float,
-        var currentSweepAngel: Float = sweepAngel,
+        var tickPeriod: Long = 25L,
         var isCountDown: Boolean = true,
         var timerPatternWithSeparator: String,
-        var timerPatternWithoutSeparator: String
+        var timerPatternWithoutSeparator: String,
+        var currentSweepAngel: Float = if (isCountDown) sweepAngel else 0f,
+        var currentTime: Long = if (isCountDown) time else 0L
 )

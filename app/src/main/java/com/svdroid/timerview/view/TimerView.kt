@@ -45,7 +45,6 @@ class TimerView : View, ITimerView {
     }
 
     override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
         canvas?.drawText(formattedTime(timerData!!.currentTime), (width!! / 2).toFloat(), (height!! / 2 + timerTextSize!! / 3).toFloat(), timerTextPaint)
         canvas?.drawCircle((width!! / 2).toFloat(), (height!! / 2).toFloat(), ((width / 2) - padding!!).toFloat(), bgTimerRoundPaint)
         canvas?.drawArc(arcRect, 270f, timerData!!.currentSweepAngel, false, fgTimerRoundPaint)
@@ -55,19 +54,23 @@ class TimerView : View, ITimerView {
         timerData?.currentSweepAngel = timerData!!.sweepAngel * time / timerData!!.time
         timerData!!.currentTime = time
 
-        if (timerData!!.currentSweepAngel < 0) {
-            cancel()
+        if (timerData!!.currentSweepAngel in 0f..360f) {
+            invalidate()
 
             return
         }
 
-        invalidate()
+        cancel()
     }
 
     override fun start() {
         cancel()
         timer = Timer()
-        timer?.schedule(TimerTask(this, timerData!!.currentTime, timerData!!.tickPeriod, timerData!!.isCountDown), 0, timerData!!.tickPeriod)
+        timer?.schedule(
+                TimerTask(this, timerData!!.currentTime, timerData!!.tickPeriod, timerData!!.isCountDown),
+                0,
+                timerData!!.tickPeriod
+        )
     }
 
     override fun pause() {
@@ -86,6 +89,7 @@ class TimerView : View, ITimerView {
         timerTextPaint.textSize = timerTextSize!!.toFloat()
         timerTextPaint.color = ContextCompat.getColor(context, R.color.colorPrimary)
         timerTextPaint.textAlign = Paint.Align.CENTER
+        timerTextPaint.isLinearText = true
         bgTimerRoundPaint.strokeWidth = 6f
         bgTimerRoundPaint.style = Paint.Style.STROKE
         bgTimerRoundPaint.color = ContextCompat.getColor(context, R.color.colorPrimary)
@@ -95,10 +99,8 @@ class TimerView : View, ITimerView {
         arcRect = RectF(padding!!.toFloat(), padding.toFloat(), width!!.toFloat() - padding, height!!.toFloat() - padding)
         timerData = TimerData(
                 30L * 1000L,
-                30L * 1000L,
+                360f,
                 25L,
-                360f,
-                360f,
                 true,
                 context.getString(R.string.default_pattern_time_with_dot),
                 context.getString(R.string.default_pattern_time_without_dot)
