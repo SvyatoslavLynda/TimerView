@@ -67,7 +67,7 @@ class TimerView : View, ITimerView {
         cancel()
         timer = Timer()
         timer?.schedule(
-                TimerTask(this, timerData!!.currentTime, timerData!!.tickPeriod, timerData!!.isCountDown),
+                TimerTask(this, timerData!!.currentTime, timerData!!.tickPeriod, timerData!!.isCountDown, timerData!!.currentTime),
                 0,
                 timerData!!.tickPeriod
         )
@@ -78,9 +78,14 @@ class TimerView : View, ITimerView {
     }
 
     override fun stop() {
-        timerData!!.currentTime = timerData!!.time
-        timerData!!.currentSweepAngel = timerData!!.sweepAngel
+        timerData?.resetData()
         cancel()
+        invalidate()
+    }
+
+    override fun changeTimerType(isCountDown: Boolean) {
+        timerData!!.changeCountType(isCountDown)
+        stop()
         invalidate()
     }
 
@@ -90,18 +95,21 @@ class TimerView : View, ITimerView {
         timerTextPaint.color = ContextCompat.getColor(context, R.color.colorPrimary)
         timerTextPaint.textAlign = Paint.Align.CENTER
         timerTextPaint.isLinearText = true
+        timerTextPaint.isAntiAlias = true
         bgTimerRoundPaint.strokeWidth = 6f
         bgTimerRoundPaint.style = Paint.Style.STROKE
         bgTimerRoundPaint.color = ContextCompat.getColor(context, R.color.colorPrimary)
+        bgTimerRoundPaint.isAntiAlias = true
         fgTimerRoundPaint.strokeWidth = 6f
         fgTimerRoundPaint.style = Paint.Style.STROKE
         fgTimerRoundPaint.color = ContextCompat.getColor(context, R.color.colorAccent)
+        fgTimerRoundPaint.isAntiAlias = true
         arcRect = RectF(padding!!.toFloat(), padding.toFloat(), width!!.toFloat() - padding, height!!.toFloat() - padding)
         timerData = TimerData(
                 30L * 1000L,
                 360f,
                 25L,
-                true,
+                false,
                 context.getString(R.string.default_pattern_time_with_dot),
                 context.getString(R.string.default_pattern_time_without_dot)
         )

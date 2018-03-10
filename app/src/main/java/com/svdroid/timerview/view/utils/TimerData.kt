@@ -12,4 +12,14 @@ data class TimerData(
         var timerPatternWithoutSeparator: String,
         var currentSweepAngel: Float = if (isCountDown) sweepAngel else 0f,
         var currentTime: Long = if (isCountDown) time else 0L
-)
+) {
+    fun changeCountType(isCountDown: Boolean) {
+        this.isCountDown = isCountDown
+        resetData()
+    }
+
+    fun resetData() {
+        currentSweepAngel = if (isCountDown) sweepAngel else 0f
+        currentTime = if (isCountDown) time else 0L
+    }
+}

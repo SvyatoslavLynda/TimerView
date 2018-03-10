@@ -7,4 +7,5 @@ interface ITimerView : ITimerTickListener {
     fun start()
     fun pause()
     fun stop()
+    fun changeTimerType(isCountDown: Boolean)
 }

@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context="com.svdroid.timerview.MainActivity">
 
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/countDownCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:text="@string/check_box_is_count_down"/>
+
     <com.svdroid.timerview.view.TimerView
         android:id="@+id/timerView"
         android:layout_width="wrap_content"
@@ -23,6 +30,8 @@
             android:id="@+id/btnStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
             android:text="@string/btn_title_start"/>
 
         <Button
@@ -31,12 +40,16 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:clickable="true"
+            android:focusable="true"
             android:text="@string/btn_title_pause"/>
 
         <Button
             android:id="@+id/btnStop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
             android:text="@string/btn_title_stop"/>
     </android.support.v7.widget.ButtonBarLayout>
 
