@@ -55,11 +55,13 @@ class TimerView : View, ITimerView {
         timerData?.currentSweepAngel = timerData!!.sweepAngel * time / timerData!!.time
         timerData!!.currentTime = time
 
-        if (timerData!!.currentSweepAngel >= 0) {
-            invalidate()
-        } else {
+        if (timerData!!.currentSweepAngel < 0) {
             cancel()
+
+            return
         }
+
+        invalidate()
     }
 
     override fun start() {
@@ -91,7 +93,16 @@ class TimerView : View, ITimerView {
         fgTimerRoundPaint.style = Paint.Style.STROKE
         fgTimerRoundPaint.color = ContextCompat.getColor(context, R.color.colorAccent)
         arcRect = RectF(padding!!.toFloat(), padding.toFloat(), width!!.toFloat() - padding, height!!.toFloat() - padding)
-        timerData = TimerData(30L * 1000L, 30L * 1000L, 25L, 360f, 360f)
+        timerData = TimerData(
+                30L * 1000L,
+                30L * 1000L,
+                25L,
+                360f,
+                360f,
+                true,
+                context.getString(R.string.default_pattern_time_with_dot),
+                context.getString(R.string.default_pattern_time_without_dot)
+        )
     }
 
     private fun cancel() {
@@ -104,6 +115,11 @@ class TimerView : View, ITimerView {
         val m = timeML / (60L * 1000L)
         val s = (timeML - (m * 60L * 1000L)) / 1000L
 
-        return String.format(Locale.getDefault(), "%02d.%02d", m, s)
+        return String.format(
+                Locale.getDefault(),
+                if (((timerData!!.time - timeML) % 1000) > 500) timerData!!.timerPatternWithoutSeparator else timerData!!.timerPatternWithSeparator,
+                m,
+                s
+        )
     }
 }

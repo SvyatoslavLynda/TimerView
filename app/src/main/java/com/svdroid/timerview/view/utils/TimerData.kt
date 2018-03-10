@@ -9,5 +9,7 @@ data class TimerData(
         var tickPeriod: Long = 25L,
         val sweepAngel: Float,
         var currentSweepAngel: Float = sweepAngel,
-        var isCountDown: Boolean = true
+        var isCountDown: Boolean = true,
+        var timerPatternWithSeparator: String,
+        var timerPatternWithoutSeparator: String
 )

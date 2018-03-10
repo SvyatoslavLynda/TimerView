@@ -4,4 +4,6 @@
     <string name="btn_title_start">Start</string>
     <string name="btn_title_pause">Pause</string>
     <string name="btn_title_stop">Stop</string>
+    <string name="default_pattern_time_with_dot" formatted="true" translatable="false">%02d.%02d</string>
+    <string name="default_pattern_time_without_dot" formatted="true" translatable="false">%02d %02d</string>
 </resources>
