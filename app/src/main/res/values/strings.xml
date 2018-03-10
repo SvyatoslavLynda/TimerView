@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TimerView</string>
+
+    <string name="btn_title_start">Start</string>
+    <string name="btn_title_pause">Pause</string>
+    <string name="btn_title_stop">Stop</string>
 </resources>

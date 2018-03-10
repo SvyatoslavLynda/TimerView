@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="timer_default_width">144dp</dimen>
+    <dimen name="timer_default_height">144dp</dimen>
+    <dimen name="timer_default_padding">4dp</dimen>
+    <dimen name="timer_default_text_size">32sp</dimen>
+</resources>
