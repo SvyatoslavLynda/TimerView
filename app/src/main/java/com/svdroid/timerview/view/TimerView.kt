@@ -54,13 +54,15 @@ class TimerView : View, ITimerView {
         timerData?.currentSweepAngel = timerData!!.sweepAngel * time / timerData!!.time
         timerData!!.currentTime = time
 
-        if (timerData!!.currentSweepAngel in 0f..360f) {
-            invalidate()
+        post({
+            if (timerData!!.currentSweepAngel in 0f..360f) {
+                invalidate()
 
-            return
-        }
+                return@post
+            }
 
-        cancel()
+            stop()
+        })
     }
 
     override fun start() {
